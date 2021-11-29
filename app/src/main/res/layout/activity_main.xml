@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fenetrePrincipale"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="15dp"
+    tools:context=".GameActivity">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/dbClick"
+        android:layout_width="248dp"
+        android:layout_height="248dp"
+        android:layout_marginTop="36dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ball1"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nbDb" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/nbDb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="0 Dragon ball"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif"
+        android:text="Shop :"
+        android:textColor="#000000"
+        android:textSize="29sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dbClick" />
+
+    <TextView
+        android:id="@+id/DbPerSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 Dragon ball / s"
+        android:textColor="#FFA200"
+        app:layout_constraintEnd_toEndOf="@+id/nbDb"
+        app:layout_constraintTop_toBottomOf="@+id/nbDb" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
