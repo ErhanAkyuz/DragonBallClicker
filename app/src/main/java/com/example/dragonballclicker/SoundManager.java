@@ -7,6 +7,7 @@ import android.media.SoundPool;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class SoundManager {
 
@@ -21,9 +22,29 @@ public class SoundManager {
 
 
     public SoundManager()
-    {/*
-        context = getAppCompatActivity().getApplicationContext();
-        mediaPlayer = MediaPlayer.create(context, R.raw.cowmusic);
+    {
+        context = context.getApplicationContext();
+
+        Random rand = new Random();
+        int nombreAleatoire = rand.nextInt(3 - 1 + 1) + 1;
+        switch(nombreAleatoire){
+
+            case 1:
+                mediaPlayer = MediaPlayer.create(context, R.raw.dragon_ball_z_best_music_part_1);
+                break;
+
+            case 2:
+                mediaPlayer = MediaPlayer.create(context, R.raw.all_dragon_ball_anime_openings_f);
+                break;
+
+            case 3:
+                mediaPlayer = MediaPlayer.create(context, R.raw.dragon_ball_z_best_music_part_2);
+                break;
+            default:
+                mediaPlayer = MediaPlayer.create(context, R.raw.all_dragon_ball_anime_openings_f);
+                break;
+        }
+
         mediaPlayer.setVolume(0.2f, 0.2f);
         mapDeSon = new LinkedHashMap();
 
@@ -45,11 +66,19 @@ public class SoundManager {
             }
         });
 
-        mapDeSon.put("death", this.soundPool.load(context, R.raw.sfx_deathscream_alien2, 1));
-        mapDeSon.put("jump", this.soundPool.load(context, R.raw.sfx_movement_jump1, 1));
-        mapDeSon.put("menu", this.soundPool.load(context, R.raw.sfx_menu_move1, 1));
-        mapDeSon.put("coin", this.soundPool.load(context, R.raw.sfx_coin_double1, 1));
-*/
+        //son utilisé lors des clicks sur la dragon ball
+        mapDeSon.put("damage0", this.soundPool.load(context, R.raw.arc_btl_cmn_crouch_basa, 1));
+        mapDeSon.put("damage1", this.soundPool.load(context, R.raw.arc_btl_cmn_down_hizakuzure, 1));
+        mapDeSon.put("damage2", this.soundPool.load(context, R.raw.arc_btl_cmn_down_tataki, 1));
+        mapDeSon.put("damage3", this.soundPool.load(context, R.raw.arc_btl_cmn_down_utsubuse, 1));
+        mapDeSon.put("damage4", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_chase, 1));
+        mapDeSon.put("damage5", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_fnsh, 1));
+        mapDeSon.put("damage6", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_rush, 1));
+        mapDeSon.put("damage7", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_start, 1));
+
+        mapDeSon.put("uprade", this.soundPool.load(context, R.raw.arc_btl_cmn_chargegod_start, 1));
+
+        mapDeSon.put("uprade", this.soundPool.load(context, R.raw.arc_btl_cmn_chargegod_start, 1));
     }
 
 
@@ -61,18 +90,21 @@ public class SoundManager {
         mediaPlayer.start();
     }
 
-    public void deathSound(){
-        if(poolIsLoaded)
-            soundPool.play(mapDeSon.get("death"), VOLUME, VOLUME, 1, 0, 1f);
+    public void onDamage(){
+        if(poolIsLoaded) {
+            Random rand = new Random();
+            int nombreAleatoire = rand.nextInt(7 - 0 + 1) + 0;
+            soundPool.play(mapDeSon.get("damage" + nombreAleatoire), VOLUME, VOLUME, 1, 0, 1f);
+        }
     }
 
-    public void onScoreAdded(){
+    public void onUpradeAdded(){
         if(poolIsLoaded)
-            soundPool.play(mapDeSon.get("coin"), VOLUME, VOLUME, 1, 0, 1f);
+            soundPool.play(mapDeSon.get("uprade"), VOLUME, VOLUME, 1, 0, 1f);
 
     }
 
-    public void playMenuSound(){
+    /*public void playMenuSound(){
         if(poolIsLoaded)
             soundPool.play(mapDeSon.get("menu"), VOLUME, VOLUME, 1, 0, 1f);
 
@@ -82,7 +114,7 @@ public class SoundManager {
         if(poolIsLoaded)
             soundPool.play(mapDeSon.get("jump"), VOLUME, VOLUME, 1, 0, 1f);
 
-    }
+    }*/
 
 
 }

@@ -50,6 +50,8 @@ public class UpAdapter extends RecyclerView.Adapter<UpViewHolder> {
                         gameActivity.showToast();
 
                 } else {
+                    gameActivity.soundManager.onUpradeAdded();
+
                     long cookiePs = gameActivity.getCookiePs();
 
                     upgradeList.get(position).setNbUp(upgradeList.get(position).getNbUp()+1);

@@ -12,6 +12,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
     private ObjectAnimator objectAnimatorsScaleX;
     private GameActivity gameActivity;
     private Toast toast;
+    public SoundManager soundManager;
 
 
 
@@ -80,12 +82,15 @@ public class GameActivity extends AppCompatActivity {
         DbPerSec = findViewById(R.id.DbPerSec);
         fenetrePrincipale = findViewById(R.id.fenetrePrincipale);
 
+        //lance la musique de fond
+        soundManager.start();
 
         dbclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cookie = cookie + nbPlus;
                 nbDb.setText(cookie + " Dragon ball");
+                soundManager.onDamage();
             }
         });
 
@@ -250,12 +255,14 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isResume = true;
+        soundManager.start();
         thread.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        soundManager.stop();
         isResume = false;
     }
 
@@ -267,4 +274,5 @@ public class GameActivity extends AppCompatActivity {
         if (nbPlus > 1)
         GameActivity.nbPlus = nbPlus;
     }
+
 }
