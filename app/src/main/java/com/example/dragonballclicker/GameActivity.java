@@ -11,8 +11,10 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -32,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
     private ConstraintLayout fenetrePrincipale;
     private ImageButton dbclick;
+    private ImageButton infoButton;
     private TextView nbDb;
     private TextView DbPerSec;
     private RecyclerView upRecycler;
@@ -43,7 +46,6 @@ public class GameActivity extends AppCompatActivity {
     private GameActivity gameActivity;
     private Toast toast;
     public SoundManager soundManager;
-
 
 
     private static int nbPlus;
@@ -81,6 +83,7 @@ public class GameActivity extends AppCompatActivity {
         nbDb = findViewById(R.id.nbDb);
         DbPerSec = findViewById(R.id.DbPerSec);
         fenetrePrincipale = findViewById(R.id.fenetrePrincipale);
+        infoButton =  findViewById(R.id.infoButton);
 
         //lance la musique de fond
         soundManager = new SoundManager(getApplicationContext());
@@ -235,6 +238,26 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    public void click(View v) {
+        Intent broIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/dQw4w9WgXcQ"));
+        startActivity(broIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isResume = true;
+        soundManager.start();
+        thread.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        soundManager.pause();
+        isResume = false;
+    }
+
     public void affichageNbDb(long price) {
         cookie = cookie - price;
         nbDb.setText(cookie + " Dragon ball");
@@ -250,21 +273,6 @@ public class GameActivity extends AppCompatActivity {
 
     public TextView getDbPerSec() {
         return DbPerSec;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isResume = true;
-        soundManager.start();
-        thread.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        soundManager.stop();
-        isResume = false;
     }
 
     public static int getNbPlus() {

@@ -80,8 +80,8 @@ public class SoundManager {
     }
 
 
-    public void stop(){
-        mediaPlayer.stop();
+    public void pause(){
+        mediaPlayer.pause();
     }
 
     public  void start(){
