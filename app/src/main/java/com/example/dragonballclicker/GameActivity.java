@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class GameActivity extends AppCompatActivity {
 
-
+    //Tous les attributs
     private ConstraintLayout fenetrePrincipale;
     private ImageButton dbclick;
     private ImageButton infoButton;
@@ -46,7 +46,6 @@ public class GameActivity extends AppCompatActivity {
     private GameActivity gameActivity;
     private Toast toast;
     public SoundManager soundManager;
-
 
     private static int nbPlus;
     private boolean isResume;
@@ -68,17 +67,20 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         nbPlus = 1;
         gameActivity = this;
         upgradeList = new ArrayList<>();
         toastList = new ArrayList<>();
+
         initList();
+
+        //lien entre le XML et le code
         upRecycler = findViewById(R.id.upRecycler);
         upAdapter = new UpAdapter(upgradeList, this);
         upRecycler.setAdapter(upAdapter);
         upRecycler.setLayoutManager(new LinearLayoutManager(this));
 
+        //lien entre le XML et le code
         dbclick = findViewById(R.id.dbClick);
         nbDb = findViewById(R.id.nbDb);
         DbPerSec = findViewById(R.id.DbPerSec);
@@ -89,6 +91,7 @@ public class GameActivity extends AppCompatActivity {
         soundManager = new SoundManager(getApplicationContext());
         soundManager.start();
 
+        //Ajoute des point à chaque clique et joue un son
         dbclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +101,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        //Anime l'apparition et la disparaition du +1 à l'endroit où a cliquer l'utilisateur
         dbclick.setOnTouchListener(new View.OnTouchListener() {
 
             private TextView plus;
@@ -168,6 +172,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        //ajoute les cookies données par les upgrades toutes les secondes
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -187,12 +192,13 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
+    //initialise la liste des upgrades
     private void initList() {
+
+
         upgradeList.add(new Upgrade(100, getDrawable(R.drawable.songokukid), "Son Goku Enfant", 0, 1));
         upgradeList.add(new Upgrade(500, getDrawable(R.drawable.goku_pose), "Son Goku Adulte", 0, 5));
         upgradeList.add(new Upgrade(1100, getDrawable(R.drawable.goku_kx3), "Son Goku Kaioken x3", 0, 8));
@@ -205,8 +211,6 @@ public class GameActivity extends AppCompatActivity {
         upgradeList.add(new Upgrade(75000000000l, getDrawable(R.drawable.goku_blue2), "Son Goku super saiyan blue", 0,1600000));
         upgradeList.add(new Upgrade(100000000000l, getDrawable(R.drawable.goku_bluek), "Son Goku SSJB Kaioken x20", 0,10000000));
         upgradeList.add(new Upgrade(500000000000l, getDrawable(R.drawable.goku_ultra_instinct), "Son Goku ultra instinct", 0,65000000));
-
-
     }
 
     public static float getCookie() {
@@ -217,8 +221,8 @@ public class GameActivity extends AppCompatActivity {
         return upgradeList;
     }
 
+    //affiche un toast si aucun toast n'est afficher à l'écran
     public void showToast()  {
-        //affiche un toast si aucun toast n'est afficher à l'écran
         if (toastList.size() == 0) {
             toast = Toast.makeText(getApplicationContext(), "Vous ne pas procéder assez de Dragon Ball pour acheter cette amélioration", Toast.LENGTH_SHORT);
             toastList.add(toast);
@@ -238,6 +242,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //Renvoie vers une
     public void click(View v) {
         Intent broIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/dQw4w9WgXcQ"));
         startActivity(broIntent);
