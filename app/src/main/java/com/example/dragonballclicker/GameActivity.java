@@ -83,6 +83,7 @@ public class GameActivity extends AppCompatActivity {
         fenetrePrincipale = findViewById(R.id.fenetrePrincipale);
 
         //lance la musique de fond
+        soundManager = new SoundManager(getApplicationContext());
         soundManager.start();
 
         dbclick.setOnClickListener(new View.OnClickListener() {

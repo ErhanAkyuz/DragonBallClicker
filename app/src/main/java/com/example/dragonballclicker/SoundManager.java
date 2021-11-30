@@ -12,19 +12,17 @@ import java.util.Random;
 public class SoundManager {
 
 
-    private Context context;
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private HashMap<String, Integer> mapDeSon;
     private boolean poolIsLoaded;
-    private static final float VOLUME = 0.9f;
+    private static final float VOLUME = 0.05f;
+    private static final float VOLUMEUPGRADE = 0.7f;
 
 
 
-    public SoundManager()
+    public SoundManager(Context context)
     {
-        context = context.getApplicationContext();
-
         Random rand = new Random();
         int nombreAleatoire = rand.nextInt(3 - 1 + 1) + 1;
         switch(nombreAleatoire){
@@ -71,14 +69,14 @@ public class SoundManager {
         mapDeSon.put("damage1", this.soundPool.load(context, R.raw.arc_btl_cmn_down_hizakuzure, 1));
         mapDeSon.put("damage2", this.soundPool.load(context, R.raw.arc_btl_cmn_down_tataki, 1));
         mapDeSon.put("damage3", this.soundPool.load(context, R.raw.arc_btl_cmn_down_utsubuse, 1));
-        mapDeSon.put("damage4", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_chase, 1));
-        mapDeSon.put("damage5", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_fnsh, 1));
-        mapDeSon.put("damage6", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_rush, 1));
-        mapDeSon.put("damage7", this.soundPool.load(context, R.raw.arc_btl_cmn_drgnrush_start, 1));
+        mapDeSon.put("damage4", this.soundPool.load(context, R.raw.dragon_ball_super_punch_sound_effects_2, 1));
+        mapDeSon.put("damage5", this.soundPool.load(context, R.raw.dragon_ball_super_punch_sound_effects_9, 1));
+        mapDeSon.put("damage6", this.soundPool.load(context, R.raw.dragon_ball_super_punch_sound_effects_13, 1));
+        mapDeSon.put("damage7", this.soundPool.load(context, R.raw.dragon_ball_super_punch_sound_effects_14, 1));
+        mapDeSon.put("damage7", this.soundPool.load(context, R.raw.dragon_ball_z_heavy_punch_sound_effect, 1));
 
         mapDeSon.put("uprade", this.soundPool.load(context, R.raw.arc_btl_cmn_chargegod_start, 1));
 
-        mapDeSon.put("uprade", this.soundPool.load(context, R.raw.arc_btl_cmn_chargegod_start, 1));
     }
 
 
@@ -100,7 +98,7 @@ public class SoundManager {
 
     public void onUpradeAdded(){
         if(poolIsLoaded)
-            soundPool.play(mapDeSon.get("uprade"), VOLUME, VOLUME, 1, 0, 1f);
+            soundPool.play(mapDeSon.get("uprade"), VOLUMEUPGRADE, VOLUMEUPGRADE, 1, 0, 1f);
 
     }
 
