@@ -12,11 +12,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,9 +27,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -69,10 +74,18 @@ public class GameActivity extends AppCompatActivity {
 
         nbPlus = 1;
         gameActivity = this;
-        upgradeList = new ArrayList<>();
         toastList = new ArrayList<>();
 
-        initList();
+        try {
+            upgradeList = PrefConfig.readListInPref();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (upgradeList == null) {
+            upgradeList = new ArrayList<>();
+            initList();
+            System.out.println("LA RECUP NE MARCHE PAS");
+        }
 
         //lien entre le XML et le code
         upRecycler = findViewById(R.id.upRecycler);
@@ -90,6 +103,15 @@ public class GameActivity extends AppCompatActivity {
         //lance la musique de fond
         soundManager = new SoundManager(getApplicationContext());
         soundManager.start();
+
+        // aller chercher le fichier de préférence dans lequel le score est stocké
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // extraire la valeur de Score
+        cookie = preferences.getLong("Score", 0);
+        //cookie = preferences.getLong("Score",0);
+        nbDb.setText(cookie + " Dragon ball");
+
+        //user.
 
         //Ajoute des point à chaque clique et joue un son
         dbclick.setOnClickListener(new View.OnClickListener() {
@@ -192,12 +214,12 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     //initialise la liste des upgrades
     private void initList() {
-
 
         upgradeList.add(new Upgrade(100, getDrawable(R.drawable.songokukid), "Son Goku Enfant", 0, 1));
         upgradeList.add(new Upgrade(500, getDrawable(R.drawable.goku_pose), "Son Goku Adulte", 0, 5));
@@ -242,6 +264,21 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    public void save() {
+        // aller chercher le fichier de préférence pour l'éditer
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        // ajouter le doubler "Scrore" avec sa valeur actuelle
+        editor.putLong("Score", cookie);
+        try {
+            PrefConfig.writeListInPref(upgradeList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // enregister le fichier de préférence
+        editor.apply();
+    }
+
     //Renvoie vers une
     public void click(View v) {
         Intent broIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/dQw4w9WgXcQ"));
@@ -261,6 +298,12 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
         soundManager.pause();
         isResume = false;
+    }
+
+    @Override
+    protected void onStop() {
+        save();
+        super.onStop();
     }
 
     public void affichageNbDb(long price) {
