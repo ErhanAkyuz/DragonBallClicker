@@ -29,12 +29,13 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements Serializable {
 
     //Tous les attributs
     private ConstraintLayout fenetrePrincipale;
@@ -77,14 +78,17 @@ public class GameActivity extends AppCompatActivity {
         toastList = new ArrayList<>();
 
         try {
-            upgradeList = PrefConfig.readListInPref();
-        } catch (FileNotFoundException e) {
+            PrefConfig.reader(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
         if (upgradeList == null) {
             upgradeList = new ArrayList<>();
             initList();
-            System.out.println("LA RECUP NE MARCHE PAS");
         }
 
         //lien entre le XML et le code
@@ -110,8 +114,6 @@ public class GameActivity extends AppCompatActivity {
         cookie = preferences.getLong("Score", 0);
         //cookie = preferences.getLong("Score",0);
         nbDb.setText(cookie + " Dragon ball");
-
-        //user.
 
         //Ajoute des point à chaque clique et joue un son
         dbclick.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +148,7 @@ public class GameActivity extends AppCompatActivity {
                 return false;
             }
 
+            // animation du +1 lors du click sur le dragonball
             public void oneAnimation(TextView plus) {
                 AnimatorSet plus1 = new AnimatorSet();
 
@@ -270,18 +273,22 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         // ajouter le doubler "Scrore" avec sa valeur actuelle
         editor.putLong("Score", cookie);
+
         try {
-            PrefConfig.writeListInPref(upgradeList);
+            PrefConfig.writer(upgradeList, getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //PrefConfig.writeListInPref(getApplicationContext(), upgradeList);
+        //PrefConfig.createNewFile(getApplicationContext());
+
         // enregister le fichier de préférence
         editor.apply();
     }
 
-    //Renvoie vers une
+    //Renvoie vers une page d'explication
     public void click(View v) {
-        Intent broIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/dQw4w9WgXcQ"));
+        Intent broIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://univlemansfr-my.sharepoint.com/:b:/g/personal/erhan_akyuz_etu_univ-lemans_fr/EQQsZ8m-Ws5GlXSpbnx5VBcBjUnYuXTVbmJ7nCAY2N53Ug?e=V1OEeW"));
         startActivity(broIntent);
     }
 

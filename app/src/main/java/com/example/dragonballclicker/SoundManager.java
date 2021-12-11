@@ -25,6 +25,7 @@ public class SoundManager {
     {
         Random rand = new Random();
         int nombreAleatoire = rand.nextInt(3 - 1 + 1) + 1;
+        //random de la musique de fond
         switch(nombreAleatoire){
 
             case 1:
@@ -99,20 +100,5 @@ public class SoundManager {
     public void onUpradeAdded(){
         if(poolIsLoaded)
             soundPool.play(mapDeSon.get("uprade"), VOLUMEUPGRADE, VOLUMEUPGRADE, 1, 0, 1f);
-
     }
-
-    /*public void playMenuSound(){
-        if(poolIsLoaded)
-            soundPool.play(mapDeSon.get("menu"), VOLUME, VOLUME, 1, 0, 1f);
-
-    }
-
-    public void onPlayerMoveUpPlaySound(){
-        if(poolIsLoaded)
-            soundPool.play(mapDeSon.get("jump"), VOLUME, VOLUME, 1, 0, 1f);
-
-    }*/
-
-
 }

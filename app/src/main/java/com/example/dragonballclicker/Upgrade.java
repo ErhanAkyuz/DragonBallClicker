@@ -3,7 +3,11 @@ package com.example.dragonballclicker;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-public class Upgrade {
+import java.io.Serializable;
+
+//Classe permettant de d'éfinir les amérilorations
+
+public class Upgrade implements Serializable {
 
     private long DBs;
     private int nbUp;
